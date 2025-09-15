@@ -16,7 +16,7 @@ export const MapPage = () => {
         subtitle="Track your metro in real-time"
       />
 
-      <div className="max-w-md mx-auto p-4 space-y-4">
+      <div className="max-w-md mx-auto p-4 space-y-4 pt-6">
         {/* Current Train Status */}
         <Card className="shadow-card">
           <CardHeader className="pb-3">

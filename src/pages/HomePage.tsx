@@ -68,7 +68,7 @@ export const HomePage = () => {
         }
       />
 
-      <div className="max-w-md mx-auto p-4 space-y-6">
+      <div className="max-w-md mx-auto p-4 space-y-6 pt-6">
         {/* Booking Form */}
         <Card className="shadow-card">
           <CardHeader>
