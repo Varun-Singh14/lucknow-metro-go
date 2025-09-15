@@ -1,3 +1,9 @@
+export interface City {
+  id: string;
+  name: string;
+  stations: Station[];
+}
+
 export interface Station {
   id: string;
   name: string;
@@ -26,7 +32,7 @@ export interface Booking {
   qrCodes: string[];
 }
 
-export const STATIONS: Station[] = [
+const LUCKNOW_STATIONS: Station[] = [
   { id: "ccs-airport", name: "CCS AIRPORT", status: "open" },
   { id: "amausi", name: "AMAUSI", status: "open" },
   { id: "transport-nagar", name: "TRANSPORT NAGAR", status: "open" },
@@ -50,6 +56,41 @@ export const STATIONS: Station[] = [
   { id: "munshipulia", name: "MUNSHIPULIA", status: "open" }
 ];
 
+const KANPUR_STATIONS: Station[] = [
+  { id: "iit-kanpur", name: "IIT KANPUR", status: "open" },
+  { id: "kalyanpur-metro", name: "KALYANPUR METRO", status: "open" },
+  { id: "spm-hospital", name: "SPM HOSPITAL", status: "open" },
+  { id: "vishwavidyalaya-metro", name: "VISHWAVIDYALAYA METRO", status: "open" },
+  { id: "gurudev-chauraha", name: "GURUDEV CHAURAHA", status: "open" },
+  { id: "geeta-nagar", name: "GEETA NAGAR", status: "open" },
+  { id: "rawatpur-metro", name: "RAWATPUR METRO", status: "open" },
+  { id: "llr-hospital", name: "LLR HOSPITAL", status: "open" },
+  { id: "motijheel-metro", name: "MOTIJHEEL METRO", status: "open" },
+  { id: "chunni-ganj", name: "CHUNNI GANJ", status: "open" },
+  { id: "naveen-market", name: "NAVEEN MARKET", status: "open" },
+  { id: "bada-chauraha", name: "BADA CHAURAHA", status: "open" },
+  { id: "naya-ganj", name: "NAYA GANJ", status: "open" },
+  { id: "kanpur-central", name: "KANPUR CENTRAL", status: "open" }
+];
+
+const AGRA_STATIONS: Station[] = [
+  { id: "taj-east-gate", name: "TAJ EAST GATE", status: "open" },
+  { id: "shaheed-captain-shubham-gupta", name: "SHAHEED CAPTAIN SHUBHAM GUPTA", status: "open" },
+  { id: "fatehabad-road", name: "FATEHABAD ROAD", status: "open" },
+  { id: "taj-mahal", name: "TAJ MAHAL", status: "open" },
+  { id: "agra-fort", name: "AGRA FORT", status: "open" },
+  { id: "mankameshwar-mandir", name: "MANKAMESHWAR MANDIR", status: "open" }
+];
+
+export const CITIES: City[] = [
+  { id: "lucknow", name: "Lucknow", stations: LUCKNOW_STATIONS },
+  { id: "kanpur", name: "Kanpur", stations: KANPUR_STATIONS },
+  { id: "agra", name: "Agra", stations: AGRA_STATIONS }
+];
+
+// Legacy export for backward compatibility
+export const STATIONS: Station[] = LUCKNOW_STATIONS;
+
 // Demo user
 export const DEMO_USER: User = {
   id: "demo123",
@@ -65,9 +106,12 @@ export const DEMO_CREDENTIALS = {
 };
 
 // Calculate fare based on number of stations
-export const calculateFare = (fromStationId: string, toStationId: string, passengers: number): number => {
-  const fromIndex = STATIONS.findIndex(s => s.id === fromStationId);
-  const toIndex = STATIONS.findIndex(s => s.id === toStationId);
+export const calculateFare = (fromStationId: string, toStationId: string, passengers: number, cityId: string = "lucknow"): number => {
+  const city = CITIES.find(c => c.id === cityId);
+  if (!city) return 0;
+  
+  const fromIndex = city.stations.findIndex(s => s.id === fromStationId);
+  const toIndex = city.stations.findIndex(s => s.id === toStationId);
   
   if (fromIndex === -1 || toIndex === -1) return 0;
   
@@ -83,8 +127,9 @@ export const calculateFare = (fromStationId: string, toStationId: string, passen
 };
 
 // Generate QR code data
-export const generateQRCode = (bookingId: string, passengerIndex: number): string => {
-  return `LUCKNOW_METRO_${bookingId}_P${passengerIndex + 1}`;
+export const generateQRCode = (bookingId: string, passengerIndex: number, cityId: string = "lucknow"): string => {
+  const cityName = CITIES.find(c => c.id === cityId)?.name.toUpperCase() || "LUCKNOW";
+  return `UP_METRO_${cityName}_${bookingId}_P${passengerIndex + 1}`;
 };
 
 // Demo bookings

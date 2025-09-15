@@ -5,20 +5,31 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
-import { ArrowUpDown, Users, IndianRupee, Train } from "lucide-react";
+import { ArrowUpDown, Users, IndianRupee, Train, AlertTriangle, Wifi, Heart, HelpCircle } from "lucide-react";
 import { ActionBar } from "@/components/ActionBar";
+import { InfoCard } from "@/components/InfoCard";
 import { BottomNavigation } from "@/components/BottomNavigation";
-import { STATIONS, calculateFare, DEMO_USER } from "@/data/demoData";
+import { CITIES, calculateFare, DEMO_USER } from "@/data/demoData";
 import { useToast } from "@/hooks/use-toast";
 
 export const HomePage = () => {
+  const [selectedCity, setSelectedCity] = useState("lucknow");
   const [fromStation, setFromStation] = useState("");
   const [toStation, setToStation] = useState("");
   const [passengers, setPassengers] = useState(1);
   const navigate = useNavigate();
   const { toast } = useToast();
 
-  const fare = fromStation && toStation ? calculateFare(fromStation, toStation, passengers) : 0;
+  const currentCity = CITIES.find(c => c.id === selectedCity);
+  const stations = currentCity ? currentCity.stations : [];
+  
+  const fare = fromStation && toStation ? calculateFare(fromStation, toStation, passengers, selectedCity) : 0;
+
+  const handleCityChange = (cityId: string) => {
+    setSelectedCity(cityId);
+    setFromStation("");
+    setToStation("");
+  };
 
   const handleSwapStations = () => {
     const temp = fromStation;
@@ -47,20 +58,33 @@ export const HomePage = () => {
 
     // Create booking data and navigate to ticket screen
     const bookingData = {
-      fromStation: STATIONS.find(s => s.id === fromStation),
-      toStation: STATIONS.find(s => s.id === toStation),
+      fromStation: stations.find(s => s.id === fromStation),
+      toStation: stations.find(s => s.id === toStation),
       passengers,
       amount: fare,
+      city: currentCity,
     };
 
     navigate("/ticket", { state: { bookingData } });
   };
 
+  const handleInfoCardClick = (type: string) => {
+    // Navigate to detail pages or show modals
+    toast({
+      title: "Information",
+      description: `${type} details coming soon`,
+    });
+  };
+
   return (
     <div className="min-h-screen bg-background pb-20">
       <ActionBar 
-        title={`Welcome, ${DEMO_USER.name}`}
+        title="UP Metro"
         subtitle="Book your metro ticket"
+        showCitySelector={true}
+        selectedCity={selectedCity}
+        onCityChange={handleCityChange}
+        cities={CITIES}
         customAction={
           <div className="bg-primary-foreground/20 rounded-full p-1.5">
             <Train className="w-4 h-4" />
@@ -74,7 +98,7 @@ export const HomePage = () => {
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
               <Train className="w-5 h-5 text-primary" />
-              Book Metro Ticket
+              Book Metro Ticket - {currentCity?.name}
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-6">
@@ -89,7 +113,7 @@ export const HomePage = () => {
                       <SelectValue placeholder="Select source station" />
                     </SelectTrigger>
                     <SelectContent>
-                      {STATIONS.map((station) => (
+                      {stations.map((station) => (
                         <SelectItem key={station.id} value={station.id}>
                           {station.name}
                         </SelectItem>
@@ -105,7 +129,7 @@ export const HomePage = () => {
                       <SelectValue placeholder="Select destination station" />
                     </SelectTrigger>
                     <SelectContent>
-                      {STATIONS.map((station) => (
+                      {stations.map((station) => (
                         <SelectItem key={station.id} value={station.id}>
                           {station.name}
                         </SelectItem>
@@ -171,6 +195,37 @@ export const HomePage = () => {
             </Button>
           </CardContent>
         </Card>
+
+        {/* Information Cards */}
+        <div className="grid grid-cols-1 gap-4">
+          <InfoCard
+            title="Dos and Don'ts"
+            description="Please Observe These Guidelines for an Enjoyable Journey."
+            icon={<AlertTriangle className="w-5 h-5" />}
+            onViewDetail={() => handleInfoCardClick("Dos and Don'ts")}
+          />
+          
+          <InfoCard
+            title="Station Facilities"
+            description="Explore the amenities available to enhance your journey experience."
+            icon={<Wifi className="w-5 h-5" />}
+            onViewDetail={() => handleInfoCardClick("Station Facilities")}
+          />
+          
+          <InfoCard
+            title="For Differently Abled"
+            description="Facilities tailored for the differently-abled community."
+            icon={<Heart className="w-5 h-5" />}
+            onViewDetail={() => handleInfoCardClick("For Differently Abled")}
+          />
+          
+          <InfoCard
+            title="FAQs"
+            description="Find answers to commonly asked questions about UP Metro services."
+            icon={<HelpCircle className="w-5 h-5" />}
+            onViewDetail={() => handleInfoCardClick("FAQs")}
+          />
+        </div>
       </div>
 
       <BottomNavigation />
