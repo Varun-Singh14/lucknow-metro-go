@@ -69,22 +69,6 @@ export const HomePage = () => {
       />
 
       <div className="max-w-md mx-auto p-4 space-y-6">
-        {/* Quick Stats */}
-        <div className="grid grid-cols-3 gap-4">
-          <Card className="p-3 text-center">
-            <div className="text-lg font-bold text-primary">{STATIONS.length}</div>
-            <div className="text-xs text-muted-foreground">Stations</div>
-          </Card>
-          <Card className="p-3 text-center">
-            <div className="text-lg font-bold text-primary">₹10</div>
-            <div className="text-xs text-muted-foreground">Min Fare</div>
-          </Card>
-          <Card className="p-3 text-center">
-            <div className="text-lg font-bold text-primary">24/7</div>
-            <div className="text-xs text-muted-foreground">Service</div>
-          </Card>
-        </div>
-
         {/* Booking Form */}
         <Card className="shadow-card">
           <CardHeader>
