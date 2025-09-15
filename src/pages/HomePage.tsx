@@ -96,20 +96,7 @@ export const HomePage = () => {
           <CardContent className="space-y-6">
             {/* Station Selection with Swap Button */}
             <div className="flex items-center gap-4">
-              {/* Swap Button - Left Side */}
-              <div className="flex flex-col items-center justify-center h-full pt-8">
-                <Button
-                  type="button"
-                  variant="outline"
-                  size="icon"
-                  onClick={handleSwapStations}
-                  className="rounded-full"
-                >
-                  <ArrowUpDown className="w-4 h-4" />
-                </Button>
-              </div>
-
-              {/* Station Dropdowns - Right Side */}
+              {/* Station Dropdowns - Left Side */}
               <div className="flex-1 space-y-4">
                 <div className="space-y-2">
                   <Label htmlFor="from">From Station</Label>
@@ -142,6 +129,19 @@ export const HomePage = () => {
                     </SelectContent>
                   </Select>
                 </div>
+              </div>
+
+              {/* Swap Button - Right Side */}
+              <div className="flex flex-col items-center justify-center h-full pt-8">
+                <Button
+                  type="button"
+                  variant="outline"
+                  size="icon"
+                  onClick={handleSwapStations}
+                  className="rounded-full"
+                >
+                  <ArrowUpDown className="w-4 h-4" />
+                </Button>
               </div>
             </div>
 
