@@ -62,13 +62,13 @@ export const HomePage = () => {
         title={`Welcome, ${DEMO_USER.name}`}
         subtitle="Book your metro ticket"
         customAction={
-          <div className="bg-primary-foreground/10 rounded-full p-2">
-            <Train className="w-5 h-5" />
+          <div className="bg-primary-foreground/20 rounded-full p-1.5">
+            <Train className="w-4 h-4" />
           </div>
         }
       />
 
-      <div className="max-w-md mx-auto p-4 space-y-6 pt-6">
+      <div className="max-w-md mx-auto p-4 space-y-6">
         {/* Booking Form */}
         <Card className="shadow-card">
           <CardHeader>

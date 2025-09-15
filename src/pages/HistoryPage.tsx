@@ -59,7 +59,7 @@ export const HistoryPage = () => {
         subtitle="View your past and active bookings"
       />
 
-      <div className="max-w-md mx-auto p-4 space-y-4 pt-6">
+      <div className="max-w-md mx-auto p-4 space-y-4">
         {bookings.length === 0 ? (
           <Card className="shadow-card">
             <CardContent className="p-8 text-center">

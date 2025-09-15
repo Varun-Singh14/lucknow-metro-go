@@ -106,7 +106,7 @@ export const TicketPage = () => {
         }
       />
 
-      <div className="max-w-md mx-auto p-4 space-y-4 pt-6">
+      <div className="max-w-md mx-auto p-4 space-y-4">
         {/* Ticket Card */}
         <Card className="shadow-metro overflow-hidden">
           {/* Route Information */}
