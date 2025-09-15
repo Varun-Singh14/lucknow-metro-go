@@ -69,6 +69,22 @@ export const HomePage = () => {
       />
 
       <div className="max-w-md mx-auto p-4 space-y-6">
+        {/* Quick Stats */}
+        <div className="grid grid-cols-3 gap-4">
+          <Card className="p-3 text-center">
+            <div className="text-lg font-bold text-primary">{STATIONS.length}</div>
+            <div className="text-xs text-muted-foreground">Stations</div>
+          </Card>
+          <Card className="p-3 text-center">
+            <div className="text-lg font-bold text-primary">₹10</div>
+            <div className="text-xs text-muted-foreground">Min Fare</div>
+          </Card>
+          <Card className="p-3 text-center">
+            <div className="text-lg font-bold text-primary">24/7</div>
+            <div className="text-xs text-muted-foreground">Service</div>
+          </Card>
+        </div>
+
         {/* Booking Form */}
         <Card className="shadow-card">
           <CardHeader>
@@ -78,25 +94,10 @@ export const HomePage = () => {
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-6">
-            {/* Station Selection */}
-            <div className="space-y-4">
-              <div className="space-y-2">
-                <Label htmlFor="from">From Station</Label>
-                <Select value={fromStation} onValueChange={setFromStation}>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select source station" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {STATIONS.map((station) => (
-                      <SelectItem key={station.id} value={station.id}>
-                        {station.name}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
-
-              <div className="flex justify-center">
+            {/* Station Selection with Swap Button */}
+            <div className="flex items-center gap-4">
+              {/* Swap Button - Left Side */}
+              <div className="flex flex-col items-center justify-center h-full pt-8">
                 <Button
                   type="button"
                   variant="outline"
@@ -108,20 +109,39 @@ export const HomePage = () => {
                 </Button>
               </div>
 
-              <div className="space-y-2">
-                <Label htmlFor="to">To Station</Label>
-                <Select value={toStation} onValueChange={setToStation}>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select destination station" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {STATIONS.map((station) => (
-                      <SelectItem key={station.id} value={station.id}>
-                        {station.name}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
+              {/* Station Dropdowns - Right Side */}
+              <div className="flex-1 space-y-4">
+                <div className="space-y-2">
+                  <Label htmlFor="from">From Station</Label>
+                  <Select value={fromStation} onValueChange={setFromStation}>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select source station" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {STATIONS.map((station) => (
+                        <SelectItem key={station.id} value={station.id}>
+                          {station.name}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="to">To Station</Label>
+                  <Select value={toStation} onValueChange={setToStation}>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select destination station" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {STATIONS.map((station) => (
+                        <SelectItem key={station.id} value={station.id}>
+                          {station.name}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
               </div>
             </div>
 
