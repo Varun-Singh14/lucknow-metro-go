@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -100,6 +100,18 @@ export const LoginPage = () => {
               <p className="text-sm font-medium mb-2">Demo Credentials:</p>
               <p className="text-sm text-muted-foreground">ID: demo123</p>
               <p className="text-sm text-muted-foreground">Password: password123</p>
+            </div>
+            
+            <div className="text-center mt-6">
+              <p className="text-sm text-muted-foreground">
+                Don't have an account?{" "}
+                <Link 
+                  to="/signup" 
+                  className="text-primary hover:underline font-medium"
+                >
+                  Sign Up
+                </Link>
+              </p>
             </div>
           </CardContent>
         </Card>
